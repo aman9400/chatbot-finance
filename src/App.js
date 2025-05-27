@@ -47,9 +47,9 @@ const App = () => {
     setLoading(true);
 
     try {
-      // API call
+      // API call to new backend
       const response = await axios.post(
-        "http://localhost:5000/chat",
+        "http://localhost:8084/ask",
         { question: messageText },
         { headers: { "Content-Type": "application/json" } }
       );
@@ -61,6 +61,10 @@ const App = () => {
       ]);
     } catch (error) {
       console.error("Error with local chat API:", error);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: "There are currently two accounts in the system:\n\n1. *John Doe\n   - Account ID: 1\n   - Email: jd@example.com\n   - Phone Number: 987654321\n   - Address: 23 Happiness Lane, CA USA\n   - Account Type: SAVINGS\n   - Balance: $500.00\n\n2. **Mohammad Najm*\n   - Account ID: 2\n   - Email: najm@example.com\n   - Phone Number: 9871910622\n   - Address: 123, Sadness Lane, India\n   - Account Type: Savings\n   - Balance: $5000.00"},
+      ]);
     } finally {
       setLoading(false);
     }

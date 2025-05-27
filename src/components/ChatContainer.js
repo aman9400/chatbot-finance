@@ -31,7 +31,7 @@ const ChatContainer = ({ messages }) => {
   return (
     <ChatWindow>
       {messages.map((msg, index) => (
-        <Message key={index} text={msg.text} isUser={msg.isUser} />
+        <Message key={index} text={msg.text } isUser={msg.isUser} isBot={!msg.isUser} />
       ))}
       <Watermark>FakeBank Secure Chat</Watermark>
     </ChatWindow>

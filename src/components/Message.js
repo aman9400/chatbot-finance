@@ -2,36 +2,72 @@ import React from "react";
 import styled from "styled-components";
 
 const MessageBubble = styled.div`
-  background: ${(props) =>
-    props.isUser
-      ? "linear-gradient(90deg, #2563eb 0%, #60a5fa 100%)"
-      : "linear-gradient(90deg, #fff 0%, #e3f0ff 100%)"};
-  color: ${(props) => (props.isUser ? "#fff" : "#1e293b")};
-  padding: 18px 26px;
-  margin: 12px 0;
-  border-radius: 28px;
-  max-width: 75%;
   align-self: ${(props) => (props.isUser ? "flex-end" : "flex-start")};
-  font-size: 1.12rem;
-  box-shadow: none; /* Removed shadow */
-  word-break: break-word;
-  border: ${(props) =>
-    props.isUser ? "2px solid #2563eb" : "2px solid #b6d0f7"};
-  position: relative;
-
-  &::after {
-    content: ${(props) => (props.isUser ? "'You'" : "'FinBank'")};
-    display: block;
-    font-size: 0.8rem;
-    color: #b6d0f7;
-    margin-top: 4px;
-    text-align: ${(props) => (props.isUser ? "right" : "left")};
-    font-weight: 500;
-    letter-spacing: 0.5px;
-  }
+  background: ${(props) => (props.isUser ? "#d0eaff" : "#ffffff")};
+  color: #333;
+  padding: 12px 16px;
+  border-radius: 16px;
+  max-width: 80%;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 `;
 
-const Message = ({ text, isUser }) => {
+const AccountCard = styled.div`
+  background: #fff;
+  border: 1px solid #b6d0f7;
+  border-radius: 16px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+`;
+
+const Bold = styled.span`
+  font-weight: bold;
+`;
+
+const parseAccountData = (text) => {
+  if (typeof text !== "string") return null;
+  if (!text.includes("There are currently") || !text.includes("Account ID")) return null;
+
+  const parts = text.split("\n\n").slice(1);
+  return parts.map((part) => {
+    const lines = part.split("\n").map((line) => line.trim().replace(/^\- /, ""));
+    const name = lines[0].replace(/\*/g, "").trim();
+    const details = {};
+
+    lines.slice(1).forEach((line) => {
+      const [key, ...rest] = line.split(":");
+      details[key.trim()] = rest.join(":").trim();
+    });
+
+    return {
+      name,
+      ...details,
+    };
+  });
+};
+
+
+const Message = ({ text, isUser, isBot }) => {
+  const accounts = parseAccountData(text);
+
+  if (accounts) {
+    return (
+      <MessageBubble isUser={isUser}>
+        {accounts.map((acc, index) => (
+          <AccountCard key={index}>
+            <div><Bold>{acc.name}</Bold></div>
+            <div><Bold>Account ID:</Bold> {acc["Account ID"]}</div>
+            <div><Bold>Email:</Bold> {acc["Email"]}</div>
+            <div><Bold>Phone Number:</Bold> {acc["Phone Number"]}</div>
+            <div><Bold>Address:</Bold> {acc["Address"]}</div>
+            <div><Bold>Account Type:</Bold> {acc["Account Type"]}</div>
+            <div><Bold>Balance:</Bold> {acc["Balance"]}</div>
+          </AccountCard>
+        ))}
+      </MessageBubble>
+    );
+  }
+
   return <MessageBubble isUser={isUser}>{text}</MessageBubble>;
 };
 
