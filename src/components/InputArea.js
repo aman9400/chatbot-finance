@@ -50,12 +50,19 @@ const InputArea = ({ onSendMessage }) => {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSend();
+    }
+  };
+
   return (
     <InputContainer>
       <TextInput
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         placeholder="Type a message..."
+        onKeyDown={handleKeyDown}
       />
       <SendButton onClick={handleSend}>Send</SendButton>
     </InputContainer>

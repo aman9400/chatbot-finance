@@ -9,17 +9,20 @@ const AppContainer = styled.div`
   max-width: 600px;
   margin: 40px auto;
   border-radius: 18px;
-  box-shadow: 0 8px 32px rgba(60, 60, 120, 0.18);
   overflow: hidden;
   background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
   border: 1px solid #e0e7ff;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 `;
 
 const MainArea = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 600px;
-  background: rgba(255,255,255,0.7);
+  flex: 1;
+  min-height: 0;
+  background: rgba(255, 255, 255, 0.7);
 `;
 
 const LoadingText = styled.p`

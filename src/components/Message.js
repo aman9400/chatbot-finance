@@ -50,23 +50,26 @@ const parseAccountData = (text) => {
 const Message = ({ text, isUser, isBot }) => {
   const accounts = parseAccountData(text);
 
-  if (accounts) {
-    return (
-      <MessageBubble isUser={isUser}>
-        {accounts.map((acc, index) => (
-          <AccountCard key={index}>
-            <div><Bold>{acc.name}</Bold></div>
-            <div><Bold>Account ID:</Bold> {acc["Account ID"]}</div>
-            <div><Bold>Email:</Bold> {acc["Email"]}</div>
-            <div><Bold>Phone Number:</Bold> {acc["Phone Number"]}</div>
-            <div><Bold>Address:</Bold> {acc["Address"]}</div>
-            <div><Bold>Account Type:</Bold> {acc["Account Type"]}</div>
-            <div><Bold>Balance:</Bold> {acc["Balance"]}</div>
-          </AccountCard>
-        ))}
-      </MessageBubble>
-    );
+  if(text.includes("There are currently")) {
+    if (accounts) {
+        return (
+          <MessageBubble isUser={isUser}>
+            {accounts.map((acc, index) => (
+              <AccountCard key={index}>
+                <div><Bold>{acc.name}</Bold></div>
+                <div><Bold>Account ID:</Bold> {acc["Account ID"]}</div>
+                <div><Bold>Email:</Bold> {acc["Email"]}</div>
+                <div><Bold>Phone Number:</Bold> {acc["Phone Number"]}</div>
+                <div><Bold>Address:</Bold> {acc["Address"]}</div>
+                <div><Bold>Account Type:</Bold> {acc["Account Type"]}</div>
+                <div><Bold>Balance:</Bold> {acc["Balance"]}</div>
+              </AccountCard>
+            ))}
+          </MessageBubble>
+        );
+   }
   }
+ 
 
   return <MessageBubble isUser={isUser}>{text}</MessageBubble>;
 };
