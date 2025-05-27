@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";  // Import axios
+import axios from "axios";
 import Header from "./components/Header";
 import ChatContainer from "./components/ChatContainer";
 import InputArea from "./components/InputArea";
